@@ -1,0 +1,18 @@
+{
+  "buildCommand": "echo Building",
+  "outputDirectory": ".",
+  "routes": [
+    {
+      "src": "/kure-hinan/(.*)",
+      "dest": "/kure-hinan/$1"
+    },
+    {
+      "src": "/web-api/(.*)",
+      "dest": "/web-api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}

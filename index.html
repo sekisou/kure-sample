@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>呉市プロジェクト</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .project-link {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-description {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏘️ 呉市プロジェクト</h1>
+        <p>呉市のデータを活用したWebアプリケーション集です。</p>
+        
+        <div class="projects">
+            <div>
+                <a href="./kure-hinan/" class="project-link">
+                    🚨 避難所一覧
+                </a>
+                <p class="project-description">呉の避難所情報を検索・地図表示</p>
+            </div>
+            
+            <div>
+                <a href="./web-api/" class="project-link">
+                    💊 ジェネリック医薬品ダッシュボード
+                </a>
+                <p class="project-description">医薬品使用状況の可視化</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
