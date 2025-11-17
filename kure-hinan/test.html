@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>避難所ページ テスト</title>
+</head>
+<body>
+    <h1>避難所CSVテスト</h1>
+    <input type="file" id="testFile" accept=".csv">
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('testFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            console.log("ファイル選択:", file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const text = event.target.result;
+                console.log("読み込みテキスト:", text.substring(0, 100));
+                
+                const lines = text.split('\n');
+                console.log("行数:", lines.length);
+                console.log("最初の行:", lines[0]);
+                console.log("2行目:", lines[1]);
+                
+                document.getElementById('result').innerHTML = `
+                    <p>行数: ${lines.length}</p>
+                    <p>最初の行: ${lines[0]}</p>
+                    <p>2行目: ${lines[1]}</p>
+                `;
+            };
+            reader.readAsText(file, 'UTF-8');
+        });
+    </script>
+</body>
+</html>
