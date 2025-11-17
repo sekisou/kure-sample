@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>呉の避難所一覧</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" />
 </head>
 <body>
     <div class="container">
@@ -13,49 +15,61 @@
             <p class="subtitle">災害時の避難所情報を確認できます</p>
         </header>
 
-        <!-- CSVアップロードセクション -->
-        <div class="upload-section">
-            <label for="csvFile" class="upload-label">
-                <span>避難所CSVファイルを選択</span>
-                <input type="file" id="csvFile" accept=".csv" />
-            </label>
-            <div id="uploadStatus"></div>
-        </div>
+        <div class="main-content">
+            <!-- 左側：検索とリスト -->
+            <div class="left-panel">
+                <!-- CSVアップロードセクション -->
+                <div class="upload-section">
+                    <label for="csvFile" class="upload-label">
+                        <span>避難所CSVファイルを選択</span>
+                        <input type="file" id="csvFile" accept=".csv" />
+                    </label>
+                    <div id="uploadStatus"></div>
+                </div>
 
-        <!-- 検索・フィルターセクション -->
-        <div id="filterSection" class="filter-section hidden">
-            <div class="filter-controls">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    placeholder="避難所名や住所で検索..."
-                    class="search-input"
-                >
-                <select id="areaFilter" class="area-filter">
-                    <option value="">すべてのエリア</option>
-                </select>
+                <!-- 検索・フィルターセクション -->
+                <div id="filterSection" class="filter-section hidden">
+                    <div class="filter-controls">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="避難所名や住所で検索..."
+                            class="search-input"
+                        >
+                        <select id="areaFilter" class="area-filter">
+                            <option value="">すべてのエリア</option>
+                        </select>
+                    </div>
+                    <div class="result-info">
+                        <span id="resultCount">0</span>件の避難所が見つかりました
+                    </div>
+                </div>
+
+                <!-- 避難所リストセクション -->
+                <div id="shelterSection" class="shelter-section hidden">
+                    <div id="shelterList" class="shelter-list"></div>
+                    
+                    <!-- ページネーション -->
+                    <div class="pagination">
+                        <button id="prevPage" class="pagination-btn">前へ</button>
+                        <span id="pageInfo" class="page-info"></span>
+                        <button id="nextPage" class="pagination-btn">次へ</button>
+                    </div>
+                </div>
+
+                <!-- エラーメッセージ -->
+                <div id="errorMessage" class="error-message hidden"></div>
             </div>
-            <div class="result-info">
-                <span id="resultCount">0</span>件の避難所が見つかりました
+
+            <!-- 右側：地図 -->
+            <div class="right-panel">
+                <div id="map" class="shelter-map" data-zoom="13" data-lat="34.24" data-lng="132.57"></div>
             </div>
         </div>
-
-        <!-- 避難所リストセクション -->
-        <div id="shelterSection" class="shelter-section hidden">
-            <div id="shelterList" class="shelter-list"></div>
-            
-            <!-- ページネーション -->
-            <div class="pagination">
-                <button id="prevPage" class="pagination-btn">前へ</button>
-                <span id="pageInfo" class="page-info"></span>
-                <button id="nextPage" class="pagination-btn">次へ</button>
-            </div>
-        </div>
-
-        <!-- エラーメッセージ -->
-        <div id="errorMessage" class="error-message hidden"></div>
     </div>
 
+    <!-- Leaflet JS -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

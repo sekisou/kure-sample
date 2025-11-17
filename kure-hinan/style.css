@@ -8,27 +8,31 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
     background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);
     min-height: 100vh;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
     background: white;
-    padding: 40px 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    padding: 20px 30px;
+    border-radius: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
     text-align: center;
 }
 
 header h1 {
     color: #2d3748;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
 }
 
 .subtitle {
@@ -36,13 +40,38 @@ header h1 {
     font-size: 1.1rem;
 }
 
+/* メインコンテンツレイアウト */
+.main-content {
+    display: flex;
+    flex: 1;
+    gap: 0;
+    overflow: hidden;
+}
+
+.left-panel {
+    width: 40%;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);
+    padding: 20px;
+}
+
+.right-panel {
+    width: 60%;
+    overflow: hidden;
+}
+
+.shelter-map {
+    width: 100%;
+    height: 100%;
+}
+
 /* アップロードセクション */
 .upload-section {
     background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
     text-align: center;
 }
 
@@ -75,10 +104,10 @@ header h1 {
 /* フィルターセクション */
 .filter-section {
     background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
 }
 
 .filter-controls {
@@ -125,22 +154,23 @@ header h1 {
 
 /* 避難所リストセクション */
 .shelter-section {
-    margin-bottom: 30px;
+    margin-bottom: 0;
 }
 
 .shelter-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .shelter-card {
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
 }
 
 .shelter-card:hover {
@@ -151,41 +181,41 @@ header h1 {
 .shelter-header {
     background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);
     color: white;
-    padding: 20px;
+    padding: 12px;
     border-bottom: 4px solid #9B2C2C;
 }
 
 .shelter-name {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .shelter-area {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     opacity: 0.9;
 }
 
 .shelter-body {
-    padding: 20px;
+    padding: 10px;
 }
 
 .shelter-info {
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 .shelter-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #718096;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     text-transform: uppercase;
 }
 
 .shelter-value {
     color: #2d3748;
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.3;
     word-break: break-word;
 }
 
@@ -206,23 +236,27 @@ header h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    margin-top: 30px;
+    gap: 10px;
+    margin-top: 0;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .pagination-btn {
-    padding: 12px 20px;
+    padding: 8px 15px;
     background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: transform 0.2s;
 }
 
 .pagination-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .pagination-btn:disabled {
@@ -231,8 +265,8 @@ header h1 {
 }
 
 .page-info {
-    font-size: 1rem;
-    color: white;
+    font-size: 0.9rem;
+    color: #2d3748;
     font-weight: 600;
 }
 
@@ -255,6 +289,20 @@ header h1 {
 @media (max-width: 768px) {
     header h1 {
         font-size: 1.8rem;
+    }
+
+    .main-content {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        width: 100%;
+        height: 50%;
+    }
+
+    .right-panel {
+        width: 100%;
+        height: 50%;
     }
 
     .shelter-list {

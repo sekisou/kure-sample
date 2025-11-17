@@ -2,14 +2,44 @@
 let rawShelters = [];
 let filteredShelters = [];
 let currentPage = 1;
-let sheltersPerPage = 9;
+let sheltersPerPage = 5;
 let uniqueAreas = [];
+let map = null;
+let markers = [];
 
 // DOMの読み込みを待つ
 document.addEventListener('DOMContentLoaded', function() {
   console.log("DOM loaded, initializing shelter app");
+  initializeMap();
   initializeApp();
 });
+
+// 地図の初期化
+function initializeMap() {
+  try {
+    console.log("Initializing Leaflet map");
+    const mapElement = document.getElementById('map');
+    
+    if (!mapElement) {
+      console.error("Map element not found");
+      return;
+    }
+
+    // Leafletで地図を作成
+    map = L.map('map').setView([34.24, 132.57], 13);
+
+    // OpenStreetMap層を追加
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    console.log("Map initialized successfully");
+
+  } catch (error) {
+    console.error("Error initializing map:", error);
+  }
+}
 
 // アプリケーション初期化
 function initializeApp() {
@@ -151,6 +181,8 @@ function parseCSV(text) {
           phone: values[3] ? values[3].trim() : "-",
           capacity: values[4] ? parseInt(values[4].trim()) : "-",
           notes: values[5] ? values[5].trim() : "-",
+          latitude: values[6] ? parseFloat(values[6].trim()) : null,
+          longitude: values[7] ? parseFloat(values[7].trim()) : null,
         };
         rawShelters.push(shelter);
         console.log("Shelter added:", shelter);
@@ -166,6 +198,7 @@ function parseCSV(text) {
         "uploadStatus"
       ).innerHTML = `<span style="color: #48bb78;">✓ ${rawShelters.length}件の避難所データを読み込みました</span>`;
       updateDashboard();
+      addMarkersToMap();
     } else {
       showError("有効なデータが見つかりません。避難所名、住所、エリアが正しく入力されているか確認してください。");
     }
@@ -264,6 +297,14 @@ function createShelterCard(shelter) {
     </div>
   `;
 
+  // カードをクリックして地図の中心を移動
+  card.addEventListener('click', function() {
+    if (map && shelter.latitude && shelter.longitude) {
+      console.log(`Centering map on ${shelter.name}:`, shelter.latitude, shelter.longitude);
+      map.setView([shelter.latitude, shelter.longitude], 15);
+    }
+  });
+
   return card;
 }
 
@@ -296,4 +337,61 @@ function showError(message) {
   errorDiv.classList.remove("hidden");
   document.getElementById("uploadStatus").innerHTML =
     '<span style="color: #f56565;">エラーが発生しました</span>';
+}
+
+// 地図にマーカーを追加
+function addMarkersToMap() {
+  try {
+    if (!map) {
+      console.warn("Map not initialized yet");
+      setTimeout(addMarkersToMap, 500);
+      return;
+    }
+
+    console.log("Adding markers to map");
+    
+    // 既存のマーカーをクリア
+    markers.forEach(marker => {
+      map.removeLayer(marker);
+    });
+    markers = [];
+
+    // 新しいマーカーを追加
+    rawShelters.forEach(shelter => {
+      if (shelter.latitude && shelter.longitude) {
+        try {
+          const marker = L.marker([shelter.latitude, shelter.longitude])
+            .bindPopup(`
+              <div style="font-size: 12px; width: 200px;">
+                <strong>${escapeHtml(shelter.name)}</strong><br>
+                <div style="margin-top: 5px;">
+                  <div><strong>${escapeHtml(shelter.area)}</strong></div>
+                  <div>${escapeHtml(shelter.address)}</div>
+                  <div>📞 ${escapeHtml(shelter.phone)}</div>
+                </div>
+              </div>
+            `)
+            .addTo(map);
+          
+          markers.push(marker);
+          console.log(`Marker added for ${shelter.name}`);
+        } catch (markerError) {
+          console.error(`Failed to add marker for ${shelter.name}:`, markerError);
+        }
+      }
+    });
+
+    console.log(`Total markers added: ${markers.length}`);
+
+    // 地図をリセット（全マーカーを表示）
+    if (markers.length > 0) {
+      const group = new L.featureGroup(markers);
+      const bounds = group.getBounds();
+      if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [50, 50] });
+      }
+    }
+  } catch (error) {
+    console.error("Error adding markers to map:", error);
+  }
 }
